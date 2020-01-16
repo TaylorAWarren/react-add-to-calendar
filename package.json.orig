@@ -1,6 +1,10 @@
 {
   "author": "Jason Salzman",
+<<<<<<< HEAD
   "name": "@markbarfs/react-add-to-calendar",
+=======
+  "name": "react-add-to-calendar-custom-labels",
+>>>>>>> 4ca47ff1b36cdd653653c13e8414acfd657b9ada
   "description": "A simple and reusable add to calendar button component for React",
   "version": "0.1.5",
   "license": "MIT",
@@ -107,6 +111,10 @@
   },
   "directories": {
     "doc": "docs",
+<<<<<<< HEAD
+    "lib": "lib",
+=======
+>>>>>>> 4ca47ff1b36cdd653653c13e8414acfd657b9ada
     "test": "test"
   }
 }
