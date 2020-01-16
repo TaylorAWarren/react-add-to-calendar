@@ -100,9 +100,10 @@ export default class ReactAddToCalendar extends React.Component {
       }
 
       return (
-        <li key={helpers.getRandomKey()} style={this.props.dropdownItemStyles}>
+        <li key={helpers.getRandomKey()}>
           <a
             className={currentItem + "-link"}
+            style={this.props.dropdownItemStyles}
             onClick={self.handleDropdownLinkClick}
             href={helpers.buildUrl(
               self.props.event,
@@ -123,7 +124,7 @@ export default class ReactAddToCalendar extends React.Component {
         className={this.props.dropdownClass}
         style={this.props.dropdownContainerStyles}
       >
-        <ul>{items}</ul>
+        <ul style={this.props.dropdownListStyles}>{items}</ul>
       </div>
     );
   }
@@ -213,6 +214,7 @@ export default class ReactAddToCalendar extends React.Component {
 ReactAddToCalendar.displayName = "Add To Calendar";
 
 ReactAddToCalendar.propTypes = {
+  dropdownListStyles: PropTypes.object,
   dropdownItemStyles: PropTypes.object,
   dropdownContainerStyles: PropTypes.object,
   buttonClassClosed: PropTypes.string,
@@ -239,6 +241,7 @@ ReactAddToCalendar.propTypes = {
 };
 
 ReactAddToCalendar.defaultProps = {
+  dropdownListStyles: {},
   dropdownItemStyles: {},
   dropdownContainerStyles: {},
   buttonClassClosed: "react-add-to-calendar__button",

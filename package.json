@@ -1,13 +1,13 @@
 {
   "author": "Jason Salzman",
-  "name": "react-add-to-calendar",
+  "name": "react-add-to-calendar-custom-labels",
   "description": "A simple and reusable add to calendar button component for React",
   "version": "0.1.5",
   "license": "MIT",
   "homepage": "https://github.com/jasonsalzman/react-add-to-calendar",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jasonsalzman/react-add-to-calendar.git"
+    "url": "git+https://github.com/jasonsalzman/react-add-to-calendar.git"
   },
   "bugs": {
     "url": "https://github.com/jasonsalzman/react-add-to-calendar/issues"
@@ -101,5 +101,12 @@
     "eslint": "eslint **/*.js",
     "prepublish": "npm run build",
     "codecov": "cat coverage/*/lcov.info | ./node_modules/codecov/bin/codecov"
+  },
+  "dependencies": {
+    "moment": "^2.18.1"
+  },
+  "directories": {
+    "doc": "docs",
+    "test": "test"
   }
 }
