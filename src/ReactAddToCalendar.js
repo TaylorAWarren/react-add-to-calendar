@@ -86,7 +86,7 @@ export default class ReactAddToCalendar extends React.Component {
   renderDropdown() {
     let self = this;
 
-    let items = this.props.listItems.map(listItem => {
+    let items = this.props.listItems.map((listItem, index) => {
       let currentItem = Object.keys(listItem)[0];
       let currentLabel = listItem[currentItem];
 
@@ -101,7 +101,11 @@ export default class ReactAddToCalendar extends React.Component {
 
       return (
         <li
-          style={this.props.dropdownListElementStyles}
+          style={
+            index === this.props.listItems.length - 1
+              ? { ...this.props.dropdownListLastElementStyles }
+              : { ...this.props.dropdownListElementStyles }
+          }
           key={helpers.getRandomKey()}
         >
           <a
@@ -217,6 +221,7 @@ export default class ReactAddToCalendar extends React.Component {
 ReactAddToCalendar.displayName = "Add To Calendar";
 
 ReactAddToCalendar.propTypes = {
+  dropdownListLastElementStyles: PropTypes.object,
   dropdownListElementStyles: PropTypes.object,
   dropdownListStyles: PropTypes.object,
   dropdownItemStyles: PropTypes.object,
@@ -245,6 +250,7 @@ ReactAddToCalendar.propTypes = {
 };
 
 ReactAddToCalendar.defaultProps = {
+  dropdownListLastElementStyles: {},
   dropdownListElementStyles: {},
   dropdownListStyles: {},
   dropdownItemStyles: {},
