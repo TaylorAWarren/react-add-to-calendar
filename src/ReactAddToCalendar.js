@@ -100,7 +100,7 @@ export default class ReactAddToCalendar extends React.Component {
       }
 
       return (
-        <li key={helpers.getRandomKey()}>
+        <li key={helpers.getRandomKey()} style={this.props.dropdownItemStyles}>
           <a
             className={currentItem + "-link"}
             onClick={self.handleDropdownLinkClick}
@@ -119,58 +119,75 @@ export default class ReactAddToCalendar extends React.Component {
     });
 
     return (
-      <div className={this.props.dropdownClass}>
+      <div
+        className={this.props.dropdownClass}
+        style={this.props.dropdownContainerStyles}
+      >
         <ul>{items}</ul>
       </div>
     );
   }
 
   renderButton() {
-    let buttonLabel = this.props.buttonLabel;
-    let buttonIcon = null;
-    let template = Object.keys(this.props.buttonTemplate);
+    switch (this.props.useCustomButtonLabel) {
+      case false:
+        let buttonLabel = this.props.buttonLabel;
+        let buttonIcon = null;
+        let template = Object.keys(this.props.buttonTemplate);
 
-    if (template[0] !== "textOnly") {
-      const iconPlacement = this.props.buttonTemplate[template];
-      const buttonClassPrefix =
-        this.props.buttonIconClass === "react-add-to-calendar__icon--"
-          ? `${this.props.buttonIconClass}${iconPlacement}`
-          : this.props.buttonIconClass;
-      const iconPrefix = this.props.useFontAwesomeIcons ? "fa fa-" : "";
+        if (template[0] !== "textOnly") {
+          const iconPlacement = this.props.buttonTemplate[template];
+          const buttonClassPrefix =
+            this.props.buttonIconClass === "react-add-to-calendar__icon--"
+              ? `${this.props.buttonIconClass}${iconPlacement}`
+              : this.props.buttonIconClass;
+          const iconPrefix = this.props.useFontAwesomeIcons ? "fa fa-" : "";
 
-      const mainButtonIconClass =
-        template[0] === "caret"
-          ? this.state.optionsOpen ? "caret-up" : "caret-down"
-          : template[0];
+          const mainButtonIconClass =
+            template[0] === "caret"
+              ? this.state.optionsOpen
+                ? "caret-up"
+                : "caret-down"
+              : template[0];
 
-      let buttonIconClass = `${buttonClassPrefix} ${iconPrefix}${mainButtonIconClass}`;
+          let buttonIconClass = `${buttonClassPrefix} ${iconPrefix}${mainButtonIconClass}`;
 
-      buttonIcon = <i className={buttonIconClass} />;
-      buttonLabel =
-        iconPlacement === "right" ? (
-          <span>
-            {buttonLabel + " "}
-            {buttonIcon}
-          </span>
-        ) : (
-          <span>
-            {buttonIcon}
-            {" " + buttonLabel}
-          </span>
+          buttonIcon = <i className={buttonIconClass} />;
+          buttonLabel =
+            iconPlacement === "right" ? (
+              <span>
+                {buttonLabel + " "}
+                {buttonIcon}
+              </span>
+            ) : (
+              <span>
+                {buttonIcon}
+                {" " + buttonLabel}
+              </span>
+            );
+        }
+
+        let buttonClass = this.state.optionsOpen
+          ? this.props.buttonClassClosed + " " + this.props.buttonClassOpen
+          : this.props.buttonClassClosed;
+
+        return (
+          <div className={this.props.buttonWrapperClass}>
+            <a className={buttonClass} onClick={this.toggleCalendarDropdown}>
+              {buttonLabel}
+            </a>
+          </div>
         );
+      case true:
+        return (
+          <div className={this.props.buttonWrapperClass}>
+            <a className={buttonClass} onClick={this.toggleCalendarDropdown}>
+              {this.props.customButtonLabel}
+            </a>
+          </div>
+        );
+        break;
     }
-
-    let buttonClass = this.state.optionsOpen
-      ? this.props.buttonClassClosed + " " + this.props.buttonClassOpen
-      : this.props.buttonClassClosed;
-
-    return (
-      <div className={this.props.buttonWrapperClass}>
-        <a className={buttonClass} onClick={this.toggleCalendarDropdown}>
-          {buttonLabel}
-        </a>
-      </div>
-    );
   }
 
   render() {
@@ -196,9 +213,13 @@ export default class ReactAddToCalendar extends React.Component {
 ReactAddToCalendar.displayName = "Add To Calendar";
 
 ReactAddToCalendar.propTypes = {
+  dropdownItemStyles: PropTypes.object,
+  dropdownContainerStyles: PropTypes.object,
   buttonClassClosed: PropTypes.string,
   buttonClassOpen: PropTypes.string,
   buttonLabel: PropTypes.string,
+  useCustomButtonLabel: PropTypes.bool,
+  customButtonLabel: PropTypes.object,
   buttonTemplate: PropTypes.object,
   buttonIconClass: PropTypes.string,
   useFontAwesomeIcons: PropTypes.bool,
@@ -218,9 +239,13 @@ ReactAddToCalendar.propTypes = {
 };
 
 ReactAddToCalendar.defaultProps = {
+  dropdownItemStyles: {},
+  dropdownContainerStyles: {},
   buttonClassClosed: "react-add-to-calendar__button",
   buttonClassOpen: "react-add-to-calendar__button--light",
   buttonLabel: "Add to My Calendar",
+  useCustomButtonLabel: false,
+  customButtonLabel: <div></div>,
   buttonTemplate: { caret: "right" },
   buttonIconClass: "react-add-to-calendar__icon--",
   useFontAwesomeIcons: true,
