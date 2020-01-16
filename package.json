@@ -17,8 +17,7 @@
   "files": [
     "*.md",
     "dist",
-    "lib",
-    "src"
+    "lib"
   ],
   "keywords": [
     "react",
