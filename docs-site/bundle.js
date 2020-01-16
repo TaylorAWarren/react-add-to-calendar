@@ -19055,11 +19055,12 @@
 
 	        return _react2.default.createElement(
 	          "li",
-	          { key: helpers.getRandomKey(), style: _this2.props.dropdownItemStyles },
+	          { key: helpers.getRandomKey() },
 	          _react2.default.createElement(
 	            "a",
 	            {
 	              className: currentItem + "-link",
+	              style: _this2.props.dropdownItemStyles,
 	              onClick: self.handleDropdownLinkClick,
 	              href: helpers.buildUrl(self.props.event, currentItem, self.state.isCrappyIE),
 	              target: "_blank"
@@ -19078,7 +19079,7 @@
 	        },
 	        _react2.default.createElement(
 	          "ul",
-	          null,
+	          { style: this.props.dropdownListStyles },
 	          items
 	        )
 	      );
@@ -19170,6 +19171,7 @@
 	ReactAddToCalendar.displayName = "Add To Calendar";
 
 	ReactAddToCalendar.propTypes = {
+	  dropdownListStyles: _propTypes2.default.object,
 	  dropdownItemStyles: _propTypes2.default.object,
 	  dropdownContainerStyles: _propTypes2.default.object,
 	  buttonClassClosed: _propTypes2.default.string,
@@ -19196,6 +19198,7 @@
 	};
 
 	ReactAddToCalendar.defaultProps = {
+	  dropdownListStyles: {},
 	  dropdownItemStyles: {},
 	  dropdownContainerStyles: {},
 	  buttonClassClosed: "react-add-to-calendar__button",
