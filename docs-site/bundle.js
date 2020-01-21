@@ -18932,6 +18932,8 @@
 	  value: true
 	});
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(2);
@@ -19043,7 +19045,7 @@
 
 	      var self = this;
 
-	      var items = this.props.listItems.map(function (listItem) {
+	      var items = this.props.listItems.map(function (listItem, index) {
 	        var currentItem = Object.keys(listItem)[0];
 	        var currentLabel = listItem[currentItem];
 
@@ -19055,7 +19057,10 @@
 
 	        return _react2.default.createElement(
 	          "li",
-	          { key: helpers.getRandomKey() },
+	          {
+	            style: index === _this2.props.listItems.length - 1 ? _extends({}, _this2.props.dropdownListLastElementStyles) : _extends({}, _this2.props.dropdownListElementStyles),
+	            key: helpers.getRandomKey()
+	          },
 	          _react2.default.createElement(
 	            "a",
 	            {
@@ -19171,6 +19176,8 @@
 	ReactAddToCalendar.displayName = "Add To Calendar";
 
 	ReactAddToCalendar.propTypes = {
+	  dropdownListLastElementStyles: _propTypes2.default.object,
+	  dropdownListElementStyles: _propTypes2.default.object,
 	  dropdownListStyles: _propTypes2.default.object,
 	  dropdownItemStyles: _propTypes2.default.object,
 	  dropdownContainerStyles: _propTypes2.default.object,
@@ -19191,13 +19198,16 @@
 	    description: _propTypes2.default.string,
 	    location: _propTypes2.default.string,
 	    startTime: _propTypes2.default.string,
-	    endTime: _propTypes2.default.string
+	    endTime: _propTypes2.default.string,
+	    allDay: _propTypes2.default.bool
 	  }).isRequired,
 	  listItems: _propTypes2.default.arrayOf(_propTypes2.default.object),
 	  rootClass: _propTypes2.default.string
 	};
 
 	ReactAddToCalendar.defaultProps = {
+	  dropdownListLastElementStyles: {},
+	  dropdownListElementStyles: {},
 	  dropdownListStyles: {},
 	  dropdownItemStyles: {},
 	  dropdownContainerStyles: {},
@@ -19218,7 +19228,8 @@
 	    description: "This is the sample event provided as an example only",
 	    location: "Portland, OR",
 	    startTime: "2016-09-16T20:15:00-04:00",
-	    endTime: "2016-09-16T21:45:00-04:00"
+	    endTime: "2016-09-16T21:45:00-04:00",
+	    allDay: false
 	  },
 	  listItems: [{ apple: "Apple Calendar" }, { google: "Google" }, { outlook: "Outlook" }, { outlookcom: "Outlook.com" }, { yahoo: "Yahoo" }],
 	  rootClass: "react-add-to-calendar"
@@ -19431,9 +19442,13 @@
 	    }
 	  }, {
 	    key: "formatTime",
-	    value: function formatTime(date) {
-	      var formattedDate = _moment2.default.utc(date).format("YYYYMMDDTHHmmssZ");
-	      return formattedDate.replace("+00:00", "Z");
+	    value: function formatTime(date, allDay) {
+	      if (allDay) {
+	        return _moment2.default.utc(date).format("YYYYMMDD");
+	      } else {
+	        var formattedDate = _moment2.default.utc(date).format("YYYYMMDDTHHmmssZ");
+	        return formattedDate.replace("+00:00", "Z");
+	      }
 	    }
 	  }, {
 	    key: "calculateDuration",
@@ -19462,8 +19477,8 @@
 	        case "google":
 	          calendarUrl = "https://calendar.google.com/calendar/render";
 	          calendarUrl += "?action=TEMPLATE";
-	          calendarUrl += "&dates=" + this.formatTime(event.startTime);
-	          calendarUrl += "/" + this.formatTime(event.endTime);
+	          calendarUrl += "&dates=" + this.formatTime(event.startTime, event.allDay);
+	          calendarUrl += "/" + this.formatTime(event.endTime, event.allDay);
 	          calendarUrl += "&location=" + encodeURIComponent(event.location);
 	          calendarUrl += "&text=" + encodeURIComponent(event.title);
 	          calendarUrl += "&details=" + encodeURIComponent(event.description);
