@@ -243,7 +243,8 @@ ReactAddToCalendar.propTypes = {
     description: PropTypes.string,
     location: PropTypes.string,
     startTime: PropTypes.string,
-    endTime: PropTypes.string
+    endTime: PropTypes.string,
+    allDay: PropTypes.bool
   }).isRequired,
   listItems: PropTypes.arrayOf(PropTypes.object),
   rootClass: PropTypes.string
@@ -272,7 +273,8 @@ ReactAddToCalendar.defaultProps = {
     description: "This is the sample event provided as an example only",
     location: "Portland, OR",
     startTime: "2016-09-16T20:15:00-04:00",
-    endTime: "2016-09-16T21:45:00-04:00"
+    endTime: "2016-09-16T21:45:00-04:00",
+    allDay: false
   },
   listItems: [
     { apple: "Apple Calendar" },

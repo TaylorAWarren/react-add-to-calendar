@@ -6,9 +6,13 @@ export default class helpers {
     return new Date().getTime().toString() + "_" + n;
   }
 
-  formatTime(date) {
-    let formattedDate = moment.utc(date).format("YYYYMMDDTHHmmssZ");
-    return formattedDate.replace("+00:00", "Z");
+  formatTime(date, allDay) {
+    if (allDay) {
+      return moment.utc(date).format("YYYYMMDD");
+    } else {
+      let formattedDate = moment.utc(date).format("YYYYMMDDTHHmmssZ");
+      return formattedDate.replace("+00:00", "Z");
+    }
   }
 
   calculateDuration(startTime, endTime) {
@@ -39,8 +43,9 @@ export default class helpers {
       case "google":
         calendarUrl = "https://calendar.google.com/calendar/render";
         calendarUrl += "?action=TEMPLATE";
-        calendarUrl += "&dates=" + this.formatTime(event.startTime);
-        calendarUrl += "/" + this.formatTime(event.endTime);
+        calendarUrl +=
+          "&dates=" + this.formatTime(event.startTime, event.allDay);
+        calendarUrl += "/" + this.formatTime(event.endTime, event.allDay);
         calendarUrl += "&location=" + encodeURIComponent(event.location);
         calendarUrl += "&text=" + encodeURIComponent(event.title);
         calendarUrl += "&details=" + encodeURIComponent(event.description);
