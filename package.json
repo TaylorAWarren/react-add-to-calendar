@@ -1,6 +1,6 @@
 {
   "author": "Jason Salzman",
-  "name": "@markbarfs/react-add-to-calendar",
+  "name": "react-add-to-calendar-customizable-ui",
   "description": "A simple and reusable add to calendar button component for React",
   "version": "0.1.8",
   "license": "MIT",
@@ -107,6 +107,7 @@
   },
   "directories": {
     "doc": "docs",
+    "lib": "lib",
     "test": "test"
   }
 }
